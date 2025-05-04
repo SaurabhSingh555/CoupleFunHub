@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💘 Couple Fun Hub - Spark Joy in Your Relationship</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Floating Elements with Emoji -->
+    <div class="floating-elements">
+        <div class="floating-heart">💖</div>
+        <div class="floating-heart">💘</div>
+        <div class="floating-heart">💝</div>
+        <div class="floating-heart">💕</div>
+        <div class="floating-heart">💓</div>
+        <div class="floating-heart">💗</div>
+        <div class="floating-heart">💞</div>
+        <div class="floating-heart">💟</div>
+        <div class="floating-heart">🥰</div>
+        <div class="floating-heart">😍</div>
+    </div>
+
+    <!-- Sparkle Overlay -->
+    <div class="sparkle-overlay"></div>
+
+    <!-- Header with Parallax Effect -->
+    <header class="parallax-header">
+        <div class="header-overlay"></div>
+        <div class="header-content animate__animated animate__fadeInDown">
+            <h1 class="love-title">Couple Fun Hub</h1>
+            <p class="tagline">Where love meets fun! 💖</p>
+            <div class="couple-emoji animate__animated animate__heartBeat animate__infinite animate__slower">💑</div>
+        </div>
+        <div class="header-scroll-indicator">
+            <i class="fas fa-chevron-down animate__animated animate__bounce animate__infinite"></i>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="sticky-nav animate__animated animate__fadeIn">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <span class="logo-emoji">💘</span>
+                <span class="logo-text">CFH</span>
+            </a>
+            <div class="nav-links">
+                <a href="/" class="nav-link"><i class="fas fa-home"></i> <span>Home</span></a>
+                <a href="/dare" class="nav-link"><i class="fas fa-random"></i> <span>Dare Spinner</span></a>
+                <a href="/love_story" class="nav-link"><i class="fas fa-book"></i> <span>Love Story</span></a>
+                <a href="/compatibility" class="nav-link"><i class="fas fa-heart"></i> <span>Compatibility</span></a>
+                <a href="/memory_lane" class="nav-link"><i class="fas fa-images"></i> <span>Memory Lane</span></a>
+                <a href="/bucket_list" class="nav-link"><i class="fas fa-list-check"></i> <span>Bucket List</span></a>
+                <a href="/love_meter" class="nav-link"><i class="fas fa-heartbeat"></i> <span>Love Meter</span></a>
+                <a href="/date_ideas" class="nav-link"><i class="fas fa-calendar-heart"></i> <span>Date Ideas</span></a>
+                <a href="/anniversary" class="nav-link"><i class="fas fa-calendar-alt"></i> <span>Anniversary</span></a>
+               
+            </div>
+            <button class="nav-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer Sections -->
+    <footer>
+        <section id="about" class="footer-section">
+            <div class="container">
+                <h2><i class="fas fa-heart"></i> About Couple Fun Hub</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>Couple Fun Hub was created to help couples strengthen their relationships through fun, interactive activities. Our tools are designed to spark joy, create memorable moments, and deepen your connection.</p>
+                        <p>Whether you're in a new relationship or have been together for years, our playful tools can help keep the romance alive!</p>
+                        <div class="love-quote animate__animated animate__pulse animate__infinite animate__slower">
+                            "Love is not about how many days, weeks or months you've been together, it's all about how much you love each other every day."
+                            <div class="quote-emoji">💞</div>
+                        </div>
+                    </div>
+                    <div class="about-image">
+                        <div class="couple-animation">
+                            <div class="couple-emoji-large animate__animated animate__fadeInUp">👩‍❤️‍👨</div>
+                            <div class="hearts-around">
+                                <span>💖</span>
+                                <span>💘</span>
+                                <span>💝</span>
+                                <span>💕</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="footer-section">
+            <div class="container">
+                <h2><i class="fas fa-envelope"></i> Contact Us</h2>
+                <div class="contact-content">
+                    <div class="contact-form">
+                        <form id="contactForm">
+                            <div class="form-group floating-label">
+                                <input type="text" id="contactName" required>
+                                <label for="contactName">Your Name</label>
+                                <span class="highlight"></span>
+                            </div>
+                            <div class="form-group floating-label">
+                                <input type="email" id="contactEmail" required>
+                                <label for="contactEmail">Your Email</label>
+                                <span class="highlight"></span>
+                            </div>
+                            <div class="form-group floating-label">
+                                <textarea id="contactMessage" required></textarea>
+                                <label for="contactMessage">Your Message</label>
+                                <span class="highlight"></span>
+                            </div>
+                            <button type="submit" class="btn btn-love">
+                                <i class="fas fa-paper-plane"></i> Send Message
+                                <span class="heart-emoji">💌</span>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="contact-info">
+                        <div class="contact-item animate__animated animate__fadeInRight">
+                            <i class="fas fa-envelope"></i>
+                            <span>singhsaurabh34907@gmail.com</span>
+                        </div>
+                        <div class="contact-item animate__animated animate__fadeInRight animate__delay-1s">
+                            <i class="fas fa-phone"></i>
+                            <span>+91 8957876382</span>
+                        </div>
+                        <div class="contact-item animate__animated animate__fadeInRight animate__delay-2s">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Greater Noida</span>
+                        </div>
+                        <div class="social-links">
+                            <a href="#" class="social-link facebook animate__animated animate__fadeInUp"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="social-link twitter animate__animated animate__fadeInUp animate__delay-1s"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-link instagram animate__animated animate__fadeInUp animate__delay-2s"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="social-link pinterest animate__animated animate__fadeInUp animate__delay-3s"><i class="fab fa-pinterest-p"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="copyright">
+            <p>&copy; 2025 Couple Fun Hub. All rights reserved. Made with <i class="fas fa-heart heart-beat" style="color: #ff6b81;"></i> for couples in love.</p>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top animate__animated animate__fadeInUp">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <!-- Confetti Button -->
+    <button class="confetti-btn animate__animated animate__pulse animate__infinite animate__slower">
+        <i class="fas fa-heart"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        // Mobile navigation toggle
+        document.querySelector('.nav-toggle').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+            this.querySelector('i').classList.toggle('fa-bars');
+            this.querySelector('i').classList.toggle('fa-times');
+        });
+
+        // Back to top button
+        window.addEventListener('scroll', function() {
+            const backToTop = document.querySelector('.back-to-top');
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Floating hearts animation with GSAP
+        gsap.utils.toArray(".floating-heart").forEach((heart, i) => {
+            const duration = 15 + Math.random() * 10;
+            const delay = Math.random() * 5;
+            const rotation = Math.random() * 360;
+            
+            gsap.set(heart, {
+                x: Math.random() * 100 - 50,
+                y: Math.random() * 100 - 50,
+                rotation: rotation,
+                scale: 0.8 + Math.random() * 0.7
+            });
+            
+            gsap.to(heart, {
+                duration: duration,
+                x: "+=random(-100, 100)",
+                y: "+=random(-100, 100)",
+                rotation: "+=random(-180, 180)",
+                delay: delay,
+                ease: "sine.inOut",
+                repeat: -1,
+                yoyo: true
+            });
+        });
+
+        // Sparkle effect
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.innerHTML = ['✨', '🌟', '⭐', '💫', '⚡'][Math.floor(Math.random() * 5)];
+            document.querySelector('.sparkle-overlay').appendChild(sparkle);
+            
+            const size = 10 + Math.random() * 20;
+            const x = Math.random() * 100;
+            const y = Math.random() * 100;
+            const duration = 1 + Math.random() * 2;
+            const delay = Math.random() * 3;
+            
+            gsap.set(sparkle, {
+                left: `${x}%`,
+                top: `${y}%`,
+                fontSize: `${size}px`,
+                opacity: 0
+            });
+            
+            gsap.to(sparkle, {
+                duration: duration,
+                opacity: 1,
+                delay: delay,
+                scale: 1.5,
+                ease: "power1.out",
+                onComplete: () => {
+                    gsap.to(sparkle, {
+                        duration: duration,
+                        opacity: 0,
+                        scale: 0.5,
+                        ease: "power1.in",
+                        onComplete: () => sparkle.remove()
+                    });
+                }
+            });
+        }
+
+        // Create sparkles periodically
+        setInterval(createSparkle, 300);
+
+        // Confetti button
+        document.querySelector('.confetti-btn').addEventListener('click', function() {
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 },
+                shapes: ['heart', 'circle'],
+                colors: ['#ff0000', '#ff6b81', '#ff8fab', '#ffb3c6', '#ffccd5']
+            });
+            
+            // Heart pulse effect
+            this.classList.add('animate__animated', 'animate__heartBeat');
+            setTimeout(() => {
+                this.classList.remove('animate__animated', 'animate__heartBeat');
+            }, 1000);
+        });
+
+        // GSAP ScrollTrigger animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Animate elements when they come into view
+        gsap.utils.toArray(".card, .footer-section, .feature").forEach(element => {
+            gsap.from(element, {
+                scrollTrigger: {
+                    trigger: element,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                y: 50,
+                opacity: 0,
+                duration: 1,
+                ease: "power2.out"
+            });
+        });
+
+        // Floating label effect for form inputs
+        document.querySelectorAll('.floating-label input, .floating-label textarea').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentNode.classList.add('active');
+            });
+            
+            input.addEventListener('blur', function() {
+                if (!this.value) {
+                    this.parentNode.classList.remove('active');
+                }
+            });
+            
+            // Check on page load if there's content
+            if (input.value) {
+                input.parentNode.classList.add('active');
+            }
+        });
+
+        // Love pulse effect for heart emojis
+        setInterval(() => {
+            document.querySelectorAll('.heart-pulse').forEach(heart => {
+                heart.classList.add('animate__animated', 'animate__pulse');
+                setTimeout(() => {
+                    heart.classList.remove('animate__animated', 'animate__pulse');
+                }, 1000);
+            });
+        }, 3000);
+
+        // Initialize animations on load
+        window.addEventListener('load', () => {
+            // Animate the couple emoji in header
+            gsap.from(".couple-emoji", {
+                duration: 2,
+                y: -20,
+                opacity: 0,
+                ease: "elastic.out(1, 0.5)"
+            });
+            
+            // Animate the title
+            gsap.from(".love-title", {
+                duration: 1.5,
+                y: -50,
+                opacity: 0,
+                ease: "back.out(1.7)"
+            });
+            
+            // Animate the tagline
+            gsap.from(".tagline", {
+                duration: 1.5,
+                y: 50,
+                opacity: 0,
+                delay: 0.5,
+                ease: "back.out(1.7)"
+            });
+        });
+    </script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card card-3d animate__animated animate__fadeIn">
+    <h2 class="story-title">📖 Love Story Generator</h2>
+    <p class="story-subtitle">Create your personalized fairy-tale romance story. Fill in the details below:</p>
+    
+    {% if error %}
+    <div class="error-message animate__animated animate__shakeX">
+        <i class="fas fa-exclamation-circle"></i> {{ error }}
+    </div>
+    {% endif %}
+    
+    <form method="POST" class="story-form">
+        <div class="form-group floating-label">
+            <input type="text" name="name1" id="name1" required>
+            <label for="name1">Your name</label>
+            <span class="highlight"></span>
+        </div>
+        
+        <div class="form-group floating-label">
+            <input type="text" name="name2" id="name2" required>
+            <label for="name2">Partner's name</label>
+            <span class="highlight"></span>
+        </div>
+        
+        <div class="form-group floating-label">
+            <input type="text" name="place" id="place" required>
+            <label for="place">Where you met</label>
+            <span class="highlight"></span>
+        </div>
+        
+        <div class="form-group floating-label">
+            <textarea name="memory" id="memory" required></textarea>
+            <label for="memory">Favorite memory together</label>
+            <span class="highlight"></span>
+        </div>
+        
+        <button type="submit" class="btn btn-block btn-love">
+            ✨ Generate Love Story
+            <span class="heart-emoji">💖</span>
+        </button>
+    </form>
+    
+    {% if story %}
+    <div class="result animate__animated animate__fadeIn">
+        <div class="result-header">
+            <h3>Your Love Story</h3>
+            <div class="story-emoji">📜</div>
+        </div>
+        <div class="love-story">
+            {{ story }}
+        </div>
+        <div class="story-actions">
+            <button onclick="window.print()" class="btn">
+                🖨️ Print This Story
+            </button>
+            <button class="btn btn-share">
+                📤 Share Story
+            </button>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+    .story-title {
+        text-align: center;
+        font-size: 2.5rem;
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+        font-family: 'Dancing Script', cursive;
+    }
+    
+    .story-subtitle {
+        text-align: center;
+        color: #666;
+        margin-bottom: 2rem;
+        font-size: 1.1rem;
+    }
+    
+    .story-form {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    .error-message {
+        background: #ffebee;
+        color: #d32f2f;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .result {
+        margin-top: 2rem;
+        padding: 2rem;
+        background: #fff9fa;
+        border-radius: 10px;
+        border-left: 5px solid var(--primary);
+    }
+    
+    .result-header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .story-emoji {
+        font-size: 2rem;
+        animation: bounce 2s infinite;
+    }
+    
+    .love-story {
+        line-height: 1.8;
+        font-size: 1.1rem;
+        background: white;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+    
+    .story-actions {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+    
+    .btn-share {
+        background: #4267B2;
+    }
+    
+    .btn-share:hover {
+        background: #365899;
+    }
+    
+    @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% {
+            transform: translateY(0);
+        }
+        40% {
+            transform: translateY(-10px);
+        }
+        60% {
+            transform: translateY(-5px);
+        }
+    }
+</style>
+
+<script>
+    // Share button functionality
+    document.querySelector('.btn-share')?.addEventListener('click', function() {
+        if (navigator.share) {
+            navigator.share({
+                title: 'Our Love Story',
+                text: 'Check out the love story we created!',
+                url: window.location.href
+            }).catch(err => {
+                console.log('Error sharing:', err);
+                alert('Sharing failed. Please try again or copy the link manually.');
+            });
+        } else {
+            // Fallback for browsers that don't support Web Share API
+            alert('Web Share API not supported in your browser. You can copy the link manually.');
+        }
+    });
+</script>
+{% endblock %}

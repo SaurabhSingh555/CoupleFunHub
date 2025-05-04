@@ -1,0 +1,280 @@
+{% extends "base.html" %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const dareButton = document.getElementById('dareButton');
+        const dareCard = document.getElementById('dareCard');
+        const dareFront = document.getElementById('dareFront');
+        const dareBack = document.getElementById('dareBack');
+        const cardContainer = document.getElementById('cardContainer');
+        let isFlipped = false;
+        
+        // Function to get a new dare
+        async function getNewDare() {
+            try {
+                const response = await fetch('/dare', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                const data = await response.json();
+                return data.dare;
+            } catch (error) {
+                console.error('Error fetching dare:', error);
+                return "💖 Give your partner a surprise hug!";
+            }
+        }
+        
+        // Flip animation with enhanced effects
+        async function flipCard() {
+            if (isFlipped) return;
+            
+            isFlipped = true;
+            dareButton.disabled = true;
+            
+            // Add loading effect
+            dareFront.innerHTML = '<div class="loading-spinner"><i class="fas fa-heart fa-spin"></i></div>';
+            
+            // Get new dare
+            const newDare = await getNewDare();
+            dareBack.innerHTML = `<div class="dare-content">${newDare}</div>`;
+            
+            // First flip (to show back)
+            gsap.to(dareCard, {
+                rotationY: 180,
+                duration: 0.6,
+                ease: "power2.inOut",
+                onStart: function() {
+                    // Add sparkle effect
+                    for (let i = 0; i < 10; i++) {
+                        setTimeout(() => {
+                            const sparkle = document.createElement('div');
+                            sparkle.className = 'card-sparkle';
+                            sparkle.innerHTML = ['✨', '🌟', '💫'][Math.floor(Math.random() * 3)];
+                            cardContainer.appendChild(sparkle);
+                            
+                            const x = Math.random() * 100;
+                            const y = Math.random() * 100;
+                            
+                            gsap.set(sparkle, {
+                                left: `${x}%`,
+                                top: `${y}%`,
+                                fontSize: `${10 + Math.random() * 20}px`,
+                                opacity: 0
+                            });
+                            
+                            gsap.to(sparkle, {
+                                duration: 0.5,
+                                opacity: 1,
+                                scale: 1.5,
+                                ease: "power1.out",
+                                onComplete: () => {
+                                    gsap.to(sparkle, {
+                                        duration: 0.5,
+                                        opacity: 0,
+                                        scale: 0.5,
+                                        ease: "power1.in",
+                                        onComplete: () => sparkle.remove()
+                                    });
+                                }
+                            });
+                        }, i * 100);
+                    }
+                },
+                onComplete: function() {
+                    // Small bounce effect
+                    gsap.to(cardContainer, {
+                        scale: 1.05,
+                        duration: 0.1,
+                        yoyo: true,
+                        repeat: 1,
+                        onComplete: function() {
+                            isFlipped = false;
+                            dareButton.disabled = false;
+                        }
+                    });
+                    
+                    // Reset front content
+                    dareFront.innerHTML = `
+                        <i class="fas fa-heart"></i>
+                        <p>Your Dare Awaits!</p>
+                    `;
+                }
+            });
+            
+            // Reset after delay
+            setTimeout(function() {
+                gsap.to(dareCard, {
+                    rotationY: 0,
+                    duration: 0.6,
+                    delay: 3,
+                    ease: "power2.inOut"
+                });
+            }, 3000);
+        }
+        
+        // Button click event
+        dareButton.addEventListener('click', flipCard);
+        
+        // Hover effect for card
+        cardContainer.addEventListener('mouseenter', function() {
+            gsap.to(dareCard, {
+                scale: 1.02,
+                duration: 0.3,
+                ease: "power1.out"
+            });
+        });
+        
+        cardContainer.addEventListener('mouseleave', function() {
+            gsap.to(dareCard, {
+                scale: 1,
+                duration: 0.3,
+                ease: "power1.out"
+            });
+        });
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="card dare-container animate__animated animate__fadeIn">
+        <h2><i class="fas fa-random"></i> Couple Dare Flipper</h2>
+        <p class="subtitle">Click the button to reveal a fun dare to do with your partner!</p>
+        
+        <div id="cardContainer" class="card-container">
+            <div id="dareCard" class="dare-card">
+                <div id="dareFront" class="dare-front">
+                    <i class="fas fa-heart"></i>
+                    <p>Your Dare Awaits!</p>
+                </div>
+                <div id="dareBack" class="dare-back">
+                    💖 Dare will appear here!
+                </div>
+            </div>
+        </div>
+        
+        <button id="dareButton" class="btn dare-button animate__animated animate__pulse animate__infinite animate__slower">
+            <i class="fas fa-sync-alt"></i> Get a Dare
+        </button>
+    </div>
+    
+    <div class="card dare-tips animate__animated animate__fadeIn animate__delay-1s">
+        <h3><i class="fas fa-lightbulb"></i> Dare Tips</h3>
+        <ul class="tips-list">
+            <li>💡 Be open-minded and willing to try new things</li>
+            <li>💡 Respect each other's boundaries</li>
+            <li>💡 Have fun and don't take it too seriously</li>
+            <li>💡 Use dares as opportunities to connect</li>
+        </ul>
+    </div>
+</div>
+
+<style>
+    .dare-container {
+        text-align: center;
+        max-width: 600px;
+        margin: 0 auto 2rem;
+    }
+    
+    .subtitle {
+        color: #666;
+        margin-bottom: 2rem;
+    }
+    
+    .card-container {
+        perspective: 1000px;
+        margin: 2rem auto;
+        position: relative;
+    }
+    
+    .dare-card {
+        width: 100%;
+        height: 300px;
+        position: relative;
+        transform-style: preserve-3d;
+        transition: transform 0.6s;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(255, 107, 129, 0.3);
+    }
+    
+    .dare-front, .dare-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-radius: 15px;
+        padding: 2rem;
+    }
+    
+    .dare-front {
+        background: linear-gradient(135deg, #ff6b81, #ff8fab);
+        color: white;
+    }
+    
+    .dare-front i {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        text-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    }
+    
+    .dare-front p {
+        font-size: 1.5rem;
+        font-weight: 500;
+    }
+    
+    .dare-back {
+        background: white;
+        color: var(--text);
+        transform: rotateY(180deg);
+        font-size: 1.5rem;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .dare-content {
+        padding: 1rem;
+    }
+    
+    .dare-button {
+        margin-top: 1rem;
+        padding: 1rem 2rem;
+        font-size: 1.2rem;
+    }
+    
+    .dare-tips {
+        max-width: 600px;
+        margin: 0 auto;
+        background: rgba(255, 107, 129, 0.05);
+        border: 1px dashed var(--primary);
+    }
+    
+    .tips-list {
+        list-style: none;
+        padding: 0;
+    }
+    
+    .tips-list li {
+        padding: 0.5rem 0;
+        font-size: 1.1rem;
+    }
+    
+    .loading-spinner {
+        font-size: 3rem;
+        color: white;
+    }
+    
+    .card-sparkle {
+        position: absolute;
+        pointer-events: none;
+        z-index: 10;
+    }
+</style>
+{% endblock %}

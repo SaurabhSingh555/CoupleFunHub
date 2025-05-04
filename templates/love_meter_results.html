@@ -1,0 +1,228 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="card love-meter-results animate__animated animate__fadeIn">
+        <div class="result-header">
+            <h2><i class="fas fa-heart"></i> Your Love Meter Results</h2>
+            <div class="heart-emoji">💖</div>
+        </div>
+        
+        <div class="meter-container">
+            <div class="meter">
+                <div class="meter-fill" style="width: {{ percentage }}%;">
+                    <div class="meter-text">{{ percentage }}%</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="result-message">
+            <div class="message-icon">
+                {% if percentage >= 80 %}😍{% endif %}
+                {% if percentage >= 60 and percentage < 80 %}😊{% endif %}
+                {% if percentage >= 40 and percentage < 60 %}😐{% endif %}
+                {% if percentage < 40 %}😞{% endif %}
+            </div>
+            <p>{{ message }}</p>
+        </div>
+        
+        <div class="detailed-scores">
+            <h3><i class="fas fa-chart-bar"></i> Detailed Scores:</h3>
+            <div class="score-bars">
+                {% for score in scores %}
+                <div class="score-item">
+                    <div class="score-label">Question {{ loop.index }}</div>
+                    <div class="score-bar">
+                        <div class="score-fill" style="width: {{ score * 10 }}%;"></div>
+                        <div class="score-value">{{ score }}/10</div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <div class="actions">
+            <a href="/love_meter" class="btn">
+                <i class="fas fa-redo"></i> Try Again
+            </a>
+            <button class="btn btn-share">
+                <i class="fas fa-share-alt"></i> Share Results
+            </button>
+        </div>
+    </div>
+</div>
+
+<style>
+    .love-meter-results {
+        max-width: 800px;
+        text-align: center;
+    }
+    
+    .result-header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+    
+    .heart-emoji {
+        font-size: 2.5rem;
+        animation: pulse 2s infinite;
+    }
+    
+    .meter-container {
+        margin: 2rem auto;
+        max-width: 500px;
+    }
+    
+    .meter {
+        height: 30px;
+        background: #eee;
+        border-radius: 15px;
+        overflow: hidden;
+        position: relative;
+        box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    
+    .meter-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--primary), var(--primary-light));
+        border-radius: 15px;
+        transition: width 1.5s ease;
+        position: relative;
+    }
+    
+    .meter-text {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: white;
+        font-weight: bold;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+    
+    .result-message {
+        background: rgba(255, 107, 129, 0.1);
+        padding: 2rem;
+        border-radius: 10px;
+        margin: 2rem 0;
+    }
+    
+    .message-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+    
+    .result-message p {
+        font-size: 1.2rem;
+        line-height: 1.6;
+    }
+    
+    .detailed-scores {
+        margin: 2rem 0;
+        text-align: left;
+    }
+    
+    .score-bars {
+        margin-top: 1.5rem;
+    }
+    
+    .score-item {
+        margin-bottom: 1rem;
+    }
+    
+    .score-label {
+        font-size: 0.9rem;
+        margin-bottom: 0.3rem;
+        color: #666;
+    }
+    
+    .score-bar {
+        height: 20px;
+        background: #eee;
+        border-radius: 10px;
+        overflow: hidden;
+        position: relative;
+    }
+    
+    .score-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--primary), var(--primary-light));
+        transition: width 0.5s ease;
+    }
+    
+    .score-value {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 0.8rem;
+        color: white;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+    
+    .actions {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+    
+    .btn-share {
+        background: #4267B2;
+    }
+    
+    .btn-share:hover {
+        background: #365899;
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Animate the meter fill on page load
+    const meterFill = document.querySelector('.meter-fill');
+    meterFill.style.width = '0';
+    setTimeout(() => {
+        meterFill.style.width = '{{ percentage }}%';
+    }, 300);
+    
+    // Animate score bars
+    document.querySelectorAll('.score-fill').forEach((fill, index) => {
+        fill.style.width = '0';
+        setTimeout(() => {
+            fill.style.width = fill.style.width;
+        }, 500 + (index * 100));
+    });
+    
+    // Share button functionality
+    document.querySelector('.btn-share').addEventListener('click', function() {
+        if (navigator.share) {
+            navigator.share({
+                title: 'Our Love Meter Results',
+                text: 'Check out our love meter results! We scored {{ percentage }}%!',
+                url: window.location.href
+            }).catch(err => {
+                console.log('Error sharing:', err);
+                alert('Sharing failed. Please try again or copy the link manually.');
+            });
+        } else {
+            // Fallback for browsers that don't support Web Share API
+            alert('Web Share API not supported in your browser. You can copy the link manually.');
+        }
+    });
+    
+    // Confetti celebration for high scores
+    if ({{ percentage }} >= 80) {
+        confetti({
+            particleCount: 150,
+            spread: 70,
+            origin: { y: 0.6 },
+            shapes: ['heart', 'circle'],
+            colors: ['#ff0000', '#ff6b81', '#ff8fab', '#ffb3c6', '#ffccd5']
+        });
+    }
+});
+</script>
+{% endblock %}

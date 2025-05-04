@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card card-3d">
+    <h2>📅 Anniversary Calculator</h2>
+    <p>Celebrate your love! Enter your anniversary date to see how long you've been together.</p>
+    
+    {% if error %}
+    <div class="error-message animate__animated animate__shakeX">
+        {{ error }}
+    </div>
+    {% endif %}
+    
+    <form method="POST" action="/calculate_anniversary">
+        <div class="form-group">
+            <label for="anniversary_date">Your Anniversary Date:</label>
+            <input type="date" name="anniversary_date" id="anniversary_date" required>
+        </div>
+        
+        <button type="submit" class="btn btn-block">
+            🎉 Calculate Anniversary
+        </button>
+    </form>
+    
+    {% if days is not none %}
+    <div class="result animate__animated animate__fadeIn">
+        <h3>Your Love Journey</h3>
+        
+        <div class="anniversary-stats">
+            <div class="anniversary-stat">
+                <span>{{ days }}</span>
+                Days
+            </div>
+            
+            <div class="anniversary-stat">
+                <span>{{ weeks }}</span>
+                Weeks
+            </div>
+            
+            <div class="anniversary-stat">
+                <span>{{ months }}</span>
+                Months
+            </div>
+            
+            <div class="anniversary-stat">
+                <span>{{ years }}</span>
+                Years
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin: 1.5rem 0; padding: 1rem; background: #fff9fa; border-radius: 10px;">
+            <h4>Next Milestone</h4>
+            <div style="font-size: 1.5rem; color: var(--primary); margin: 0.5rem 0;">
+                {{ milestone_text }}
+            </div>
+            <p>Only {{ days_to_milestone }} days to go!</p>
+        </div>
+        
+        <div style="text-align: center; font-size: 2rem; margin-top: 1rem;" class="heart-pulse">
+            💝
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+    // Set default date to today
+    document.addEventListener('DOMContentLoaded', function() {
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('anniversary_date').value = today;
+    });
+</script>
+{% endblock %}

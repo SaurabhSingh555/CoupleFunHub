@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card card-3d animate__animated animate__fadeInUp animate__delay-1s">
+    <h2 class="welcome-title">Welcome to Couple Fun Hub! 💑</h2>
+    <p class="welcome-subtitle">Spark joy in your relationship with these playful tools:</p>
+    
+    <div class="features">
+        <div class="feature animate__animated animate__fadeInUp animate__delay-1s">
+            <div class="feature-icon">💑</div>
+            <h3>Couple Dare Spinner</h3>
+            <p>Get fun dares to spice up your relationship and keep the spark alive!</p>
+            <a href="/dare" class="btn feature-btn">Try It Now</a>
+        </div>
+        
+        <div class="feature animate__animated animate__fadeInUp animate__delay-1.2s">
+            <div class="feature-icon">📖</div>
+            <h3>Love Story Generator</h3>
+            <p>Create your unique fairy-tale romance story with personalized details.</p>
+            <a href="/love_story" class="btn feature-btn">Create Story</a>
+        </div>
+        
+        <div class="feature animate__animated animate__fadeInUp animate__delay-1.4s">
+            <div class="feature-icon">💞</div>
+            <h3>Compatibility Analyzer</h3>
+            <p>Discover how well you match with your partner in this fun analysis.</p>
+            <a href="/compatibility" class="btn feature-btn">Check Compatibility</a>
+        </div>
+        
+        <div class="feature animate__animated animate__fadeInUp animate__delay-1.6s">
+            <div class="feature-icon">📅</div>
+            <h3>Anniversary Calculator</h3>
+            <p>Track your special days and countdown to milestones.</p>
+            <a href="/anniversary" class="btn feature-btn">Calculate</a>
+        </div>
+    </div>
+    
+    <div class="love-message animate__animated animate__fadeIn animate__delay-2s">
+        <div class="love-message-content">
+            <p>"The best thing to hold onto in life is each other."</p>
+            <div class="love-emoji">💖</div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .welcome-title {
+        font-size: 2.5rem;
+        text-align: center;
+        margin-bottom: 1rem;
+        color: var(--primary);
+        font-family: 'Dancing Script', cursive;
+    }
+    
+    .welcome-subtitle {
+        text-align: center;
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        color: #666;
+    }
+    
+    .feature-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        display: inline-block;
+        animation: float 3s ease-in-out infinite;
+    }
+    
+    .feature-btn {
+        margin-top: 1rem;
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .love-message {
+        margin-top: 3rem;
+        text-align: center;
+        padding: 1.5rem;
+        background: rgba(255, 107, 129, 0.1);
+        border-radius: 10px;
+    }
+    
+    .love-message-content {
+        position: relative;
+    }
+    
+    .love-message p {
+        font-style: italic;
+        font-size: 1.2rem;
+        color: var(--primary-dark);
+    }
+    
+    .love-emoji {
+        font-size: 2rem;
+        margin-top: 0.5rem;
+        display: inline-block;
+        animation: pulse 2s infinite;
+    }
+</style>
+{% endblock %}

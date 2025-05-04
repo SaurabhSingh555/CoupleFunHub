@@ -1,0 +1,332 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="card date-ideas-card animate__animated animate__fadeIn">
+        <h2><i class="fas fa-calendar-heart"></i> Date Idea Generator</h2>
+        <p class="subtitle">Never run out of romantic ideas! 💕</p>
+        
+        <div class="idea-container">
+            <div class="idea-display animate__animated" id="dateIdea">
+                <div class="idea-placeholder">
+                    <i class="fas fa-heart"></i>
+                    <p>Click the button to generate an idea!</p>
+                </div>
+            </div>
+            
+            <button id="generateBtn" class="btn generate-btn animate__animated animate__pulse animate__infinite animate__slower">
+                <i class="fas fa-random"></i> Generate Idea
+            </button>
+        </div>
+        
+        <div class="saved-ideas">
+            <h3><i class="fas fa-bookmark"></i> Saved Ideas</h3>
+            <div class="idea-tags" id="savedTags">
+                <!-- Tags for categories will appear here -->
+                <span class="tag active" data-category="all">All</span>
+                <span class="tag" data-category="home">Home</span>
+                <span class="tag" data-category="outdoor">Outdoor</span>
+                <span class="tag" data-category="adventure">Adventure</span>
+                <span class="tag" data-category="romantic">Romantic</span>
+            </div>
+            <ul id="savedIdeasList">
+                <!-- Saved ideas will appear here -->
+                <li class="no-ideas">No ideas saved yet. Generate some ideas to see them here!</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<style>
+    .date-ideas-card {
+        max-width: 800px;
+    }
+    
+    .subtitle {
+        text-align: center;
+        color: #666;
+        margin-bottom: 2rem;
+    }
+    
+    .idea-container {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+    
+    .idea-display {
+        min-height: 200px;
+        background: linear-gradient(135deg, var(--primary), var(--primary-light));
+        color: white;
+        border-radius: 15px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 10px 30px rgba(255, 107, 129, 0.3);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .idea-placeholder {
+        text-align: center;
+    }
+    
+    .idea-placeholder i {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+    
+    .idea-placeholder p {
+        font-size: 1.2rem;
+    }
+    
+    .generate-btn {
+        padding: 1rem 2rem;
+        font-size: 1.2rem;
+    }
+    
+    .saved-ideas {
+        background: rgba(255, 107, 129, 0.05);
+        padding: 2rem;
+        border-radius: 15px;
+        border: 1px dashed var(--primary);
+    }
+    
+    .idea-tags {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        margin: 1rem 0;
+    }
+    
+    .tag {
+        padding: 0.5rem 1rem;
+        background: white;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: var(--transition);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+    
+    .tag:hover {
+        background: #f0f0f0;
+    }
+    
+    .tag.active {
+        background: var(--primary);
+        color: white;
+    }
+    
+    #savedIdeasList {
+        list-style: none;
+        padding: 0;
+        margin-top: 1rem;
+    }
+    
+    #savedIdeasList li {
+        padding: 1rem;
+        background: white;
+        border-radius: 8px;
+        margin-bottom: 0.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        transition: var(--transition);
+    }
+    
+    #savedIdeasList li:hover {
+        transform: translateX(5px);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    #savedIdeasList li .idea-category {
+        font-size: 0.8rem;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        background: #f0f0f0;
+    }
+    
+    #savedIdeasList li .idea-category.home {
+        background: #e3f2fd;
+        color: #1976d2;
+    }
+    
+    #savedIdeasList li .idea-category.outdoor {
+        background: #e8f5e9;
+        color: #388e3c;
+    }
+    
+    #savedIdeasList li .idea-category.adventure {
+        background: #fff3e0;
+        color: #e65100;
+    }
+    
+    #savedIdeasList li .idea-category.romantic {
+        background: #fce4ec;
+        color: #c2185b;
+    }
+    
+    #savedIdeasList li .delete-idea {
+        color: #ff6b81;
+        cursor: pointer;
+        margin-left: 1rem;
+    }
+    
+    .no-ideas {
+        text-align: center;
+        color: #666;
+        font-style: italic;
+    }
+    
+    .animate-idea {
+        animation: fadeIn 0.5s ease-out;
+    }
+    
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+<script>
+// Sample date ideas with categories
+const dateIdeas = [
+    { text: "Have a picnic in the park with homemade sandwiches and wine", category: "outdoor" },
+    { text: "Cook a fancy dinner together at home", category: "home" },
+    { text: "Go stargazing with blankets and hot chocolate", category: "romantic" },
+    { text: "Take a dance class together", category: "adventure" },
+    { text: "Visit a museum you've never been to", category: "adventure" },
+    { text: "Have a movie marathon with your favorite films", category: "home" },
+    { text: "Go on a sunset hike", category: "outdoor" },
+    { text: "Write love letters to each other and read them aloud", category: "romantic" },
+    { text: "Try a new restaurant in town", category: "adventure" },
+    { text: "Have a board game night with your favorite games", category: "home" }
+];
+
+let savedIdeas = [];
+
+document.getElementById('generateBtn').addEventListener('click', function() {
+    const ideaElement = document.getElementById('dateIdea');
+    const randomIdea = dateIdeas[Math.floor(Math.random() * dateIdeas.length)];
+    
+    // Add loading effect
+    ideaElement.innerHTML = '<div class="loading-spinner"><i class="fas fa-heart fa-spin"></i></div>';
+    
+    setTimeout(() => {
+        ideaElement.innerHTML = `
+            <div class="idea-content animate__animated animate__fadeIn">
+                <div class="idea-text">${randomIdea.text}</div>
+                <div class="idea-category ${randomIdea.category}">${randomIdea.category}</div>
+            </div>
+        `;
+        
+        // Add click to save functionality
+        ideaElement.addEventListener('click', function() {
+            saveIdea(randomIdea.text, randomIdea.category);
+        });
+    }, 800);
+});
+
+// Save idea to list
+function saveIdea(idea, category) {
+    if (!savedIdeas.includes(idea)) {
+        savedIdeas.push({ text: idea, category: category });
+        updateSavedIdeasList();
+        
+        // Show confirmation
+        const confirmation = document.createElement('div');
+        confirmation.innerHTML = 'Idea saved! 💖';
+        confirmation.style.position = 'fixed';
+        confirmation.style.bottom = '20px';
+        confirmation.style.left = '50%';
+        confirmation.style.transform = 'translateX(-50%)';
+        confirmation.style.backgroundColor = 'var(--primary)';
+        confirmation.style.color = 'white';
+        confirmation.style.padding = '10px 20px';
+        confirmation.style.borderRadius = '20px';
+        confirmation.style.boxShadow = '0 3px 10px rgba(0, 0, 0, 0.2)';
+        confirmation.style.zIndex = '1000';
+        confirmation.style.animation = 'fadeInOut 2s forwards';
+        document.body.appendChild(confirmation);
+        
+        setTimeout(() => {
+            confirmation.remove();
+        }, 2000);
+    }
+}
+
+// Update the saved ideas list
+function updateSavedIdeasList() {
+    const list = document.getElementById('savedIdeasList');
+    const activeCategory = document.querySelector('.tag.active').dataset.category;
+    
+    if (savedIdeas.length === 0) {
+        list.innerHTML = '<li class="no-ideas">No ideas saved yet. Generate some ideas to see them here!</li>';
+        return;
+    }
+    
+    list.innerHTML = '';
+    
+    const filteredIdeas = activeCategory === 'all' 
+        ? savedIdeas 
+        : savedIdeas.filter(idea => idea.category === activeCategory);
+    
+    if (filteredIdeas.length === 0) {
+        list.innerHTML = '<li class="no-ideas">No ideas in this category. Try another filter!</li>';
+        return;
+    }
+    
+    filteredIdeas.forEach((idea, index) => {
+        const li = document.createElement('li');
+        li.className = 'animate__animated animate__fadeInUp';
+        li.style.animationDelay = `${index * 0.1}s`;
+        li.innerHTML = `
+            <span>${idea.text}</span>
+            <div>
+                <span class="idea-category ${idea.category}">${idea.category}</span>
+                <span class="delete-idea" data-index="${index}"><i class="fas fa-trash"></i></span>
+            </div>
+        `;
+        list.appendChild(li);
+        
+        // Add delete functionality
+        li.querySelector('.delete-idea').addEventListener('click', function(e) {
+            e.stopPropagation();
+            const index = parseInt(this.getAttribute('data-index'));
+            savedIdeas.splice(index, 1);
+            updateSavedIdeasList();
+        });
+    });
+}
+
+// Filter by category
+document.querySelectorAll('.tag').forEach(tag => {
+    tag.addEventListener('click', function() {
+        document.querySelector('.tag.active').classList.remove('active');
+        this.classList.add('active');
+        updateSavedIdeasList();
+    });
+});
+
+// Animation for fade in/out
+const style = document.createElement('style');
+style.innerHTML = `
+    @keyframes fadeInOut {
+        0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+        20% { opacity: 1; transform: translateX(-50%) translateY(0); }
+        80% { opacity: 1; transform: translateX(-50%) translateY(0); }
+        100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+    }
+`;
+document.head.appendChild(style);
+</script>
+{% endblock %}
